@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef | Start</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'images/logo.png' %}" class="w-8 h-8" alt="Logo">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Get Started</a>
+            <a href="#" class="hover:text-black">Login</a>
+        </nav>
+
+    </div>
+</header>
+<div class="relative isolate px-6 pt-2 lg:px-8">
+  
+  <div aria-hidden="true" class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+    <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
+  </div>
+  <div class="mx-auto max-w-7xl py-16 sm:py-20 lg:py-24 flex flex-col lg:flex-row items-center gap-12">
+    <div class="flex-1 text-center lg:text-left">
+      <h1 class="text-5xl font-semibold tracking-tight text-black sm:text-7xl">
+        Find meals you love, right at your doorstep
+      </h1>
+
+      <p class="mt-8 text-lg font-medium text-gray-400 sm:text-xl">
+        Food brings people together, that is why at HomeChef we want to harness the power of food to connect you with people in your community.
+      </p>
+
+      <div class="mt-10 flex justify-center">
+        <a href="#" class="rounded-md bg-orange-500 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-400">
+          Get started
+        </a>
+      </div>
+    </div>
+    <div class="flex-1">
+      <img 
+        src="/static/images/food-hero.png" 
+        class="w-full max-w-md mx-auto lg:mx-0 rounded-xl shadow-lg"
+      >
+    </div>
+  </div>
+
+  <div aria-hidden="true" class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+    <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"></div>
+  </div>
+
+</div>
+
+
+</body>
+</html>
