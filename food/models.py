@@ -15,10 +15,9 @@ class Cuisine(models.Model):
 class Ingredient(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
-    class Meta: 
-        def __str__(self):
-            ordering = ('name',)
-            return self.name 
+    def __str__(self):
+        ordering = ('name',)
+        return self.name 
 
 class Meal(models.Model):
     meal_name = models.CharField(max_length=255)
@@ -36,4 +35,7 @@ class Meal(models.Model):
     meal_created_at = models.DateTimeField(auto_now_add=True)
     meal_location = models.CharField (max_length=8)
 
-
+    class Meta: 
+        def __str__(self):
+            ordering = ('name',)
+            return self.name 
