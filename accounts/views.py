@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .forms import SignupForm
-from django.http import HttpResponse
+from food.models import Meal
 
 
 
@@ -10,8 +10,11 @@ from django.http import HttpResponse
 
 
 
-def success(request):
-    return HttpResponse("Logged in successfully")
+def dashboard(request):
+    my_listings= Meal.objects.filter(meal_created_by=request.user)
+    return render (request, 'accounts/dashboard.html', {
+        'my_listings': my_listings,
+    })
 
 def signup(request):
     if request.method == "POST":

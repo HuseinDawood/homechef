@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Account</a>
+            <a href="#" class="hover:text-black">Sell dish</a>
+            <a href="#" class="hover:text-black">Inbox</a>
+            <a href="#" class="hover:text-black">Logout</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+<!-- ACCOUNT OPTIONS -->
+<h2 class="text-2xl font-bold mb-6">My HomeChef Account</h2>
+
+<div class="grid grid-cols-4 gap-10 text-center mb-10 text-green-700">
+
+<div>
+<div class="text-5xl mb-2">👤</div>
+<p class="font-semibold">Account Settings</p>
+</div>
+
+<div>
+<div class="text-5xl mb-2">✉️</div>
+<p class="font-semibold">Inbox</p>
+</div>
+
+<div>
+<div class="text-5xl mb-2">⚙️</div>
+<p class="font-semibold">Manage Food Preferences</p>
+</div>
+
+<div>
+<div class="text-5xl mb-2">🏅</div>
+<p class="font-semibold">My Rewards</p>
+</div>
+
+</div>
+
+
+<!-- MY LISTINGS -->
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-2xl font-bold">My Listings</h2>
+
+<button class="bg-green-700 text-white px-8 py-2 font-semibold text-lg">
+add
+</button>
+</div>
+
+
+<!-- LISTING GRID -->
+<div class="grid grid-cols-3 gap-6 mb-10">
+
+<!-- ITEM -->
+ {%for meal in my_listings%}
+<div class="bg-white shadow">
+
+<img src="{{ meal.meal_image.url }}"
+class="h-40 w-full object-cover">
+
+<div class="p-4 flex justify-between items-center">
+<p class="font-semibold text-gray-700">{{meal.meal_name}}</p>
+<button class="text-green-700 text-xl">🗑</button>
+</div>
+
+<div class="p-4 pt-0">
+<button class="bg-green-800 text-white w-full py-2 text-xl font-bold">
+edit
+</button>
+</div>
+
+</div>
+{% endfor %}
+ 
+</div>
+
+
+
+<!-- RECENT PURCHASES -->
+<h2 class="text-2xl font-bold mb-4">Recent Purchases</h2>
+
+<div class="grid grid-cols-3 gap-6">
+
+<!-- PURCHASE -->
+<div class="bg-white shadow">
+
+<img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb"
+class="h-40 w-full object-cover">
+
+<div class="p-4">
+<p class="font-semibold">Chicken Pasta</p>
+<p class="text-sm text-gray-500">by, Lee Wong</p>
+</div>
+
+<div class="p-4 pt-0">
+<button class="bg-green-800 text-white w-full py-2 text-xl font-bold">
+Discover
+</button>
+</div>
+
+</div>
+
+
+<!-- PURCHASE -->
+<div class="bg-white shadow">
+
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947"
+class="h-40 w-full object-cover">
+
+<div class="p-4">
+<p class="font-semibold">Beef Wellington</p>
+<p class="text-sm text-gray-500">by, Adam Guy</p>
+</div>
+
+<div class="p-4 pt-0">
+<button class="bg-green-800 text-white w-full py-2 text-xl font-bold">
+Discover
+</button>
+</div>
+
+</div>
+
+
+<!-- PURCHASE -->
+<div class="bg-white shadow">
+
+<img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa"
+class="h-40 w-full object-cover">
+
+<div class="p-4">
+<p class="font-semibold">Pie</p>
+<p class="text-sm text-gray-500">by, Adam Smith</p>
+</div>
+
+<div class="p-4 pt-0">
+<button class="bg-green-800 text-white w-full py-2 text-xl font-bold">
+Discover
+</button>
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+</body>
+</html>
