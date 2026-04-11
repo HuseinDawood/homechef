@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef | Add Meal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'images/logo.png' %}" class="w-8 h-8" alt="Logo">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Dashboard</a>
+        </nav>
+
+    </div>
+</header>
+
+<div class="w-1/2 my-6 p-6 mx-auto bg-white rounded-xl shadow">
+
+    <h1 class="mb-6 text-3xl font-bold">Add a New Meal</h1>
+
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Meal Name</label>
+            {{ form.meal_name }}
+        </div>
+
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Description</label>
+            {{ form.meal_description }}
+        </div>
+
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Cuisine</label>
+            {{ form.meal_cuisine_type }}
+        </div>
+
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Ingredients</label>
+    <select id="ingredient-select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select ingredient</option>
+        {% for ingredient in form.meal_ingredients.field.queryset %}
+            <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.meal_ingredients }}
+    </div>
+    <div id="selected-ingredients" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Price (£)</label>
+            {{ form.meal_price }}
+        </div>
+
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Image</label>
+            {{ form.meal_image }}
+        </div>
+
+
+        <div class="mb-4">
+            <label class="inline-block mb-2">Postcode</label>
+            {{ form.meal_location }}
+        </div>
+
+        <div class="mb-6">
+            <label class="inline-block mb-2 font-semibold">Dietary Options</label>
+
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <label>{{ form.meal_is_vegan }} Vegan</label>
+                <label>{{ form.meal_is_vegetarian }} Vegetarian</label>
+                <label>{{ form.meal_is_halal }} Halal</label>
+                <label>{{ form.meal_is_gluten_free }} Gluten Free</label>
+                <label>{{ form.meal_is_nut_free }} Nut Free</label>
+            </div>
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="mb-4 p-4 bg-red-100 rounded-xl">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="flex justify-center">
+            <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">
+                Add Meal
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
+
+<script>
+const select = document.getElementById("ingredient-select");
+const selectedContainer = document.getElementById("selected-ingredients");
+const hiddenSelect = document.querySelector("select[name='meal_ingredients']");
+
+select.addEventListener("change", function() {
+    const value = this.value;
+    const text = this.options[this.selectedIndex].text;
+
+    if (!value) return;
+
+    // prevent duplicates
+    for (let option of hiddenSelect.options) {
+        if (option.value === value && option.selected) {
+            return;
+        }
+    }
+
+
+    for (let option of hiddenSelect.options) {
+        if (option.value === value) {
+            option.selected = true;
+        }
+    }
+
+
+    const tag = document.createElement("span");
+    tag.className = "bg-green-200 text-green-800 px-3 py-1 rounded-full flex items-center gap-2";
+    tag.innerHTML = `
+        ${text}
+        <button type="button" class="ml-2 text-green-800">&times;</button>
+    `;
+
+    tag.querySelector("button").addEventListener("click", () => {
+        for (let option of hiddenSelect.options) {
+            if (option.value === value) {
+                option.selected = false;
+            }
+        }
+        tag.remove();
+    });
+
+    selectedContainer.appendChild(tag);
+
+    this.value = "";
+});
+</script>
