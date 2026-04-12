@@ -16,18 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
-from accounts.forms import LoginForm
-from accounts import views 
 from core import views as core_views
 from django.conf import settings 
 from django.conf.urls.static import static 
 
 urlpatterns = [
-    path('', core_views.index, name = 'index'),
-    path('signup/', views.signup, name='signup'),
-    path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html', authentication_form=LoginForm), name='login'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    path('', include("core.urls")),
+    path('account/', include("accounts.urls")),
+    path('admin/', admin.site.urls), 
     path("food/", include("food.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

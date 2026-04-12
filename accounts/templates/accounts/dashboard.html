@@ -20,7 +20,7 @@
             <a href="#" class="hover:text-black">Account</a>
             <a href="#" class="hover:text-black">Sell dish</a>
             <a href="#" class="hover:text-black">Inbox</a>
-            <a href="#" class="hover:text-black">Logout</a>
+            <a href="{% url 'accounts:logout_user' %}" class="hover:text-black">Logout</a>
         </nav>
 
     </div>
@@ -30,7 +30,7 @@
 <div class="max-w-7xl mx-auto px-6 py-8">
 
 <!-- ACCOUNT OPTIONS -->
-<h2 class="text-2xl font-bold mb-6">My HomeChef Account</h2>
+<h2 class="text-2xl font-bold mb-6">Hello {{ request.user.username}}, view your HomeChef Account</h2>
 
 <div class="grid grid-cols-4 gap-10 text-center mb-10 text-green-700">
 
@@ -60,7 +60,7 @@
 <div class="flex justify-between items-center mb-4">
 <h2 class="text-2xl font-bold">My Listings</h2>
 
-<a href="{% url 'add_meal' %}" 
+<a href="{% url 'food:add_meal' %}" 
    class="bg-green-700 text-white px-8 py-2 font-semibold text-lg inline-block">
     add
 </a>
@@ -78,15 +78,16 @@ class="h-40 w-full object-cover">
 
 <div class="p-4 flex justify-between items-center">
 <p class="font-semibold text-gray-700">{{meal.meal_name}}</p>
-<form method="POST" action="{% url 'delete_meal' meal.id %}">
+<form method="POST" action="{% url 'food:delete_meal' meal.id %}">
 {% csrf_token %}
 <button type="submit" onclick="return confirm('Are you sure you want to delete this meal?')" class="text-red-700 text-xl">X</button>
 </form>
 </div>
 <div class="p-4 pt-0">
-<button class="bg-green-800 text-white w-full py-2 text-xl font-bold">
-Edit
-</button>
+<a href="{% url 'food:edit' meal.id %}" 
+   class="bg-green-700 text-white px-8 py-2 font-semibold text-lg inline-block">
+    Edit Meal
+</a>
 </div>
 
 </div>

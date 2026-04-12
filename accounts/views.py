@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib.auth import logout 
 from .forms import SignupForm
 from food.models import Meal
 
@@ -22,7 +22,7 @@ def signup(request):
 
         if form.is_valid(): 
              form.save()
-             return redirect('')
+             return redirect('accounts:dashboard')
     else:
         form = SignupForm()
 
@@ -31,3 +31,6 @@ def signup(request):
 
     })
 
+def logout_user(request):
+    logout(request)
+    return redirect('core:index')
