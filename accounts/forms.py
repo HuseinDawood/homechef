@@ -41,7 +41,6 @@ class EditPreferenceForm(forms.ModelForm):
     class Meta:
         model = User_Preference
         fields = (
-            'user',
             'preferred_cuisines',
             'disliked_cuisines',
             'preferred_ingredients',

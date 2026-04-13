@@ -149,7 +149,7 @@
 function setupMultiSelect(selectId, containerId, hiddenName) {
     const select = document.getElementById(selectId);
     const container = document.getElementById(containerId);
-    const hiddenSelect = document.querySelector(`select[name="${hiddenName}"]`);
+    const hiddenSelect = document.getElementById(`id_${hiddenName}`);
 
     select.addEventListener("change", function () {
         const value = this.value;

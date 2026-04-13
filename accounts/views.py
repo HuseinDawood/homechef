@@ -44,8 +44,10 @@ def edit_preference(request):
         form = EditPreferenceForm(request.POST, request.FILES, instance=preference)
 
         if form.is_valid(): 
-            form.save()
-
+            pref = form.save(commit=False)
+            pref.user = request.user
+            pref.save()
+            form.save_m2m()
             return redirect('accounts:dashboard')
     else:
          form = EditPreferenceForm(instance=preference)
