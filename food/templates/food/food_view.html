@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef | Food Detail</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f7f7f7;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* MAIN LAYOUT */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    gap: 40px;
+}
+
+.hero img {
+    width: 60%;
+    border-radius: 12px;
+}
+
+.details {
+    width: 40%;
+}
+
+.price {
+    font-size: 24px;
+    color: green;
+    font-weight: bold;
+}
+
+.match {
+    background: #e6f4ea;
+    color: green;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* TAGS */
+.tags span {
+    display: inline-block;
+    background: #eee;
+    padding: 6px 10px;
+    margin: 5px 5px 0 0;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+/* BUTTONS */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #1f6f3e;
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    border: 2px solid #1f6f3e;
+    color: #1f6f3e;
+}
+
+/* CHEF SECTION */
+.chef-box {
+    margin-top: 40px;
+    background: #f1e9e4;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* GRID INFO */
+.info-grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.info-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* MATCH SECTION */
+.match-box {
+    margin-top: 30px;
+    background: #e6f4ea;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* REVIEWS */
+.reviews {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.review {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* SUGGESTIONS */
+.suggestions {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card button {
+    width: 100%;
+    background: #1f6f3e;
+    color: white;
+    border: none;
+    padding: 12px;
+}
+
+/* SMALL TEXT */
+.small {
+    color: #777;
+    font-size: 14px;
+}
+</style>
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Discover</a>
+            <a href="{%url 'accounts:dashboard' %}" class="hover:text-black">Account</a>
+            <a href="#" class="hover:text-black">Sell dish</a>
+            <a href="#" class="hover:text-black">Inbox</a>
+            <a href="{% url 'accounts:logout_user' %}" class="hover:text-black">Logout</a>
+        </nav>
+
+    </div>
+</header>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+        <img src="{{meal.meal_image.url}}" alt="Food">
+
+        <div class="details">
+            <h1 class="font-semibold text-2xl">{{meal.meal_name}}</h1>
+            <p class="small">by, {{meal.meal_created_by.username}}</p>
+            <p class = "small">Cuisine: {{meal.meal_cuisine_type}}</p>
+
+            <p class="price">£ {{meal.meal_price}}</p>
+
+            <p>⭐ 4.6 (128 reviews)</p>
+
+            <div class="match">🔥 87% match for you</div>
+            <p class="small">Based on Chicken, Rice, Halal</p>
+
+            <p>Location: {{meal.meal_location}} </p>
+
+            <button class="btn btn-primary">Order Now</button>
+            <button class="btn btn-secondary">Message Chef</button>
+        </div>
+    </div>
+
+    <!-- CHEF -->
+    <div class="chef-box">
+        <h3>👨‍🍳 A word from Adam</h3>
+        <p>
+            “I’ve been cooking this butter chicken recipe for over 10 years.
+            It’s rich, creamy, and made fresh every morning. Perfect comfort food!”
+        </p>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>About this dish</h3>
+            <p>
+             {{meal.meal_description}}
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Ingredients</h3>
+            <ul>
+                {%for ingredients in meal.meal_ingredients.all %}
+                <li>{{ingredients.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h3>Dietary</h3>
+            {% if meal.meal_is_halal == True %}
+            <p>✔ Halal</p>
+            {%else %}
+            <p>✖ Halal</p>
+            {%endif%}
+
+            {% if meal.meal_is_vegetarian == True %}
+            <p>✔ Vegetarian</p>
+            {%else %}
+            <p>✖ Vegetarian</p>
+            {%endif%}
+
+            {% if meal.meal_is_vegan == True %}
+            <p>✔ Vegan</p>
+            {%else %}
+            <p>✖ Vegan</p>
+            {%endif%}
+
+            {% if meal.meal_is_gluten_free == True %}
+            <p>✔ Gluten-Free</p>
+            {%else %}
+            <p>✖ Gluten-Free</p>
+            {%endif%}
+
+            {% if meal.meal_is_nut_free == True %}
+            <p>✔ Nut- Free</p>
+            {%else %}
+            <p>✖ Nut- Free</p>
+            {%endif%}
+        </div>
+    </div>
+
+    <!-- MATCH -->
+    <div class="match-box">
+        <h3>Why this matches you</h3>
+        <ul>
+            <li>✔ Matches your cuisine (Indian)</li>
+            <li>✔ Contains preferred ingredients (Chicken)</li>
+            <li>✔ Meets dietary requirement (Halal)</li>
+            <li>✖ Contains allergen (Dairy)</li>
+        </ul>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="reviews">
+        <div class="review">
+            ⭐⭐⭐⭐⭐
+            <p>"Absolutely amazing!"</p>
+            <p class="small">Sarah</p>
+        </div>
+
+        <div class="review">
+            ⭐⭐⭐⭐
+            <p>"Great portion size"</p>
+            <p class="small">Ali</p>
+        </div>
+
+        <div class="review">
+            ⭐⭐⭐⭐⭐
+            <p>"Best homemade curry!"</p>
+            <p class="small">John</p>
+        </div>
+    </div>
+
+    <!-- SUGGESTIONS -->
+    <div class="suggestions">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1589308078054-8326f3c5fdf9">
+            <h4>Chicken Curry</h4>
+            <button>Discover</button>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d">
+            <h4>Lamb Biryani</h4>
+            <button>Discover</button>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+            <h4>Korma</h4>
+            <button>Discover</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

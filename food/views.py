@@ -57,3 +57,9 @@ def browse_food(request):
     return render (request, 'food/discover.html', {
         'listings': listings,
     })
+
+def food_view(request, meal_id):
+    meal= get_object_or_404(Meal, id=meal_id)
+    return render(request, 'food/food_view.html', {
+        'meal': meal,
+    })

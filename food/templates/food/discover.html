@@ -46,10 +46,12 @@ class="h-40 w-full object-cover">
 <p class="font-semibold text-gray-700">{{meal.meal_name}}</p>
 </div>
 <div class="p-4 pt-0">
-<a href="" 
+{% if meal.id %}
+<a href="{% url 'food:food_view' meal.id %}" 
    class="bg-green-700 text-white px-8 py-2 font-semibold text-lg inline-block">
     Discover
 </a>
+{% endif %}
 </div>
 
 </div>
