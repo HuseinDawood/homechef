@@ -45,10 +45,12 @@
 <p class="font-semibold">Inbox</p>
 </div>
 
-<div>
-<div class="text-5xl mb-2">⚙️</div>
-<p class="font-semibold">Manage Food Preferences</p>
-</div>
+<a href="{% url 'accounts:edit_preference' %}" class="block">
+    <div class="hover:bg-gray-100 p-4 rounded-lg cursor-pointer text-center">
+    <div class="text-5xl mb-2">⚙️</div>
+    <p class="font-semibold">Manage Food Preferences</p>
+    </div>
+</a>
 
 <div>
 <div class="text-5xl mb-2">🏅</div>

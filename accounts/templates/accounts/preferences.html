@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef | Manage Taste Preferences</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'images/logo.png' %}" class="w-8 h-8" alt="Logo">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Dashboard</a>
+        </nav>
+
+    </div>
+</header>
+
+<div class="w-1/2 my-6 p-6 mx-auto bg-white rounded-xl shadow">
+
+    <h1 class="mb-6 text-3xl font-bold">Manage Meal preferences</h1>
+
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Preffered Cuisines</label>
+    <select id="preferred_cuisines_select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select Cuisine</option>
+        {% for cuisine in form.preferred_cuisines.field.queryset %}
+            <option value="{{ cuisine.id }}">{{ cuisine.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.preferred_cuisines }}
+    </div>
+    <div id="hidden_pref_cuisine" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Disliked Cuisines</label>
+    <select id="disliked_cuisines_select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select Cuisine</option>
+        {% for cuisine in form.disliked_cuisines.field.queryset %}
+            <option value="{{ cuisine.id }}">{{ cuisine.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.disliked_cuisines }}
+    </div>
+    <div id="hidden_dis_cuisine" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Preferred Ingredients</label>
+    <select id="preferred_ingredients_select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select ingredient</option>
+        {% for ingredient in form.preferred_ingredients.field.queryset %}
+            <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.preferred_ingredients }}
+    </div>
+    <div id="hidden_pref_ingredients" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Disliked Ingredients</label>
+    <select id="disliked_ingredients_select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select ingredient</option>
+        {% for ingredient in form.disliked_ingredients.field.queryset %}
+            <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.disliked_ingredients }}
+    </div>
+    <div id="hidden_dis_ingredients" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+<div class="mb-4">
+    <label class="inline-block mb-2">Allergies</label>
+    <select id="allergies_select" class="w-full py-3 px-4 border rounded-xl">
+        <option value="">Select ingredients that you are allergic to</option>
+        {% for ingredient in form.allergies.field.queryset %}
+            <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="hidden">
+        {{ form.allergies }}
+    </div>
+    <div id="hidden_allergies" class="flex flex-wrap gap-2 mt-3"></div>
+    </div>
+
+
+
+        <div class="mb-6">
+            <label class="inline-block mb-2 font-semibold">Dietary Options</label>
+
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <label>{{ form.is_vegan }} Vegan</label>
+                <label>{{ form.is_vegetarian }} Vegetarian</label>
+                <label>{{ form.is_halal }} Halal</label>
+                <label>{{ form.is_gluten_free }} Gluten Free</label>
+                <label>{{ form.is_nut_free }} Nut Free</label>
+            </div>
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="mb-4 p-4 bg-red-100 rounded-xl">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="flex justify-center">
+            <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">
+                Update Preferences
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
+
+<script>
+function setupMultiSelect(selectId, containerId, hiddenName) {
+    const select = document.getElementById(selectId);
+    const container = document.getElementById(containerId);
+    const hiddenSelect = document.querySelector(`select[name="${hiddenName}"]`);
+
+    select.addEventListener("change", function () {
+        const value = this.value;
+        const text = this.options[this.selectedIndex].text;
+
+        if (!value) return;
+
+        // prevent duplicates
+        for (let option of hiddenSelect.options) {
+            if (option.value === value && option.selected) return;
+        }
+
+        // select in hidden field
+        for (let option of hiddenSelect.options) {
+            if (option.value === value) option.selected = true;
+        }
+
+        // create tag
+        const tag = document.createElement("span");
+        tag.className = "bg-green-200 text-green-800 px-3 py-1 rounded-full flex items-center gap-2";
+        tag.innerHTML = `
+            ${text}
+            <button type="button">&times;</button>
+        `;
+
+        tag.querySelector("button").addEventListener("click", () => {
+            for (let option of hiddenSelect.options) {
+                if (option.value === value) option.selected = false;
+            }
+            tag.remove();
+        });
+
+        container.appendChild(tag);
+        this.value = "";
+    });
+}
+setupMultiSelect("preferred_ingredients_select", "hidden_pref_ingredients", "preferred_ingredients");
+setupMultiSelect("disliked_ingredients_select", "hidden_dis_ingredients", "disliked_ingredients");
+setupMultiSelect("allergies_select", "hidden_allergies", "allergies");
+setupMultiSelect("preferred_cuisines_select", "hidden_pref_cuisine", "preferred_cuisines");
+setupMultiSelect("disliked_cuisines_select", "hidden_dis_cuisine", "disliked_cuisines");
+</script>

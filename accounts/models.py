@@ -10,18 +10,13 @@ class User_Preference(models.Model):
     preferred_cuisines = models.ManyToManyField(Cuisine,related_name= "preffered_cuisines",blank=True)
     disliked_cuisines = models.ManyToManyField(Cuisine,related_name= "disliked_cuisines", blank=True)
     preferred_ingredients = models.ManyToManyField(Ingredient, related_name= "preffered_ingredients", blank=True)
-    disliked_ingredients = models.ManyToManyField(Ingredient, related_name= "disliked_ingredients", blank=True)
-
-    DIET_CHOICES = [
-        ("None", "None"),
-        ("Halal", "Halal"),
-        ("Vegan", "Vegan"),
-        ("Vegetarian", "Vegetarian"),
-    ]
-    
-    dietary_requirements = models.CharField(max_length=20, choices=DIET_CHOICES, default="None")
+    disliked_ingredients = models.ManyToManyField(Ingredient, related_name= "disliked_ingredients", blank=True) 
     allergies = models.ManyToManyField(Ingredient, related_name="allergies", blank=True)
-
+    is_vegan = models.BooleanField(default=False)
+    is_vegetarian = models.BooleanField(default=False)
+    is_halal = models.BooleanField(default=False)
+    is_gluten_free = models.BooleanField(default=False)
+    is_nut_free = models.BooleanField(default=False)
 #having to use related name being a problem
 
 @receiver(post_save, sender=User)

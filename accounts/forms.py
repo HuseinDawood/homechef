@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import User_Preference
+
+INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -33,3 +36,38 @@ class LoginForm(AuthenticationForm):
         'placeholder' : 'Your Password',
         'class': 'w-full py-4 px-6 rounded-xl'
     }))
+
+class EditPreferenceForm(forms.ModelForm):
+    class Meta:
+        model = User_Preference
+        fields = (
+            'user',
+            'preferred_cuisines',
+            'disliked_cuisines',
+            'preferred_ingredients',
+            'disliked_ingredients',
+            'allergies',
+            'is_vegan',
+            'is_vegetarian',
+            'is_halal',
+            'is_gluten_free',
+            'is_nut_free',
+        )
+
+        widgets = {
+            'preferred_cuisines': forms.SelectMultiple(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'disliked_cuisines': forms.SelectMultiple(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'preferred_ingredients': forms.SelectMultiple(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'disliked_ingredients': forms.SelectMultiple(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'allergies': forms.SelectMultiple(attrs={
+                'class': INPUT_CLASSES
+            }),
+        }
