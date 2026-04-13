@@ -51,3 +51,9 @@ def edit_meal(request, pk):
     return render(request, 'food/form.html', {
         'form': form,
      })
+
+def browse_food(request):
+    listings= Meal.objects.all()
+    return render (request, 'food/discover.html', {
+        'listings': listings,
+    })

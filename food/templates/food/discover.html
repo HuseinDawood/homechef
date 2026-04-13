@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HomeChef Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl font-bold">HomeChef</span>
+        </div>
+
+        <nav class="space-x-6 text-gray-600">
+            <a href="#" class="hover:text-black">Discover</a>
+            <a href="#" class="hover:text-black">Account</a>
+            <a href="#" class="hover:text-black">Sell dish</a>
+            <a href="#" class="hover:text-black">Inbox</a>
+            <a href="{% url 'accounts:logout_user' %}" class="hover:text-black">Logout</a>
+        </nav>
+
+    </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-2xl font-bold">Browse Recommended Food</h2>
+</div>
+
+
+<div class="grid grid-cols-3 gap-6 mb-10">
+
+
+ {%for meal in listings%}
+<div class="bg-white shadow">
+
+<img src="{{ meal.meal_image.url }}"
+class="h-40 w-full object-cover">
+
+<div class="p-4 flex justify-between items-center">
+<p class="font-semibold text-gray-700">{{meal.meal_name}}</p>
+</div>
+<div class="p-4 pt-0">
+<a href="" 
+   class="bg-green-700 text-white px-8 py-2 font-semibold text-lg inline-block">
+    Discover
+</a>
+</div>
+
+</div>
+{% endfor %}
+ 
+</div>
+</div>
+
+</body>
+</html>
