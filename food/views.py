@@ -32,6 +32,7 @@ def add_meal(request):
      
     return render(request, 'food/form.html', {
         'form': form,
+        'is_edit': False,
 
      })
 
@@ -50,6 +51,7 @@ def edit_meal(request, pk):
      
     return render(request, 'food/form.html', {
         'form': form,
+        'is_edit': True,
      })
 
 def browse_food(request):

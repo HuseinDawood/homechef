@@ -3,7 +3,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+{%if is_edit %}
+<title>HomeChef | Edit Meal</title>
+{%else %}
 <title>HomeChef | Add Meal</title>
+{%endif%}
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -26,8 +30,12 @@
 </header>
 
 <div class="w-1/2 my-6 p-6 mx-auto bg-white rounded-xl shadow">
-
-    <h1 class="mb-6 text-3xl font-bold">Add a New Meal</h1>
+    
+    {%if is_edit %}
+    <h1 class="mb-6 text-3xl font-bold">Edit Meal</h1>
+    {%else %}
+    <h1 class="mb-6 text-3xl font-bold">Add Meal</h1>
+    {%endif%}
 
     <form method="post" action="." enctype="multipart/form-data">
         {% csrf_token %}
@@ -106,7 +114,11 @@
 
         <div class="flex justify-center">
             <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">
+                {%if is_edit %}
+                Edit Meal
+                {%else%}
                 Add Meal
+                {%endif%}
             </button>
         </div>
 
