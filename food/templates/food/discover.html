@@ -17,8 +17,8 @@
         </div>
 
         <nav class="space-x-6 text-gray-600">
-            <a href="#" class="hover:text-black">Discover</a>
-            <a href="#" class="hover:text-black">Account</a>
+            <a href="" class="hover:text-black">Discover</a>
+            <a href="{%url 'accounts:dashboard' %}" class="hover:text-black">Account</a>
             <a href="#" class="hover:text-black">Sell dish</a>
             <a href="#" class="hover:text-black">Inbox</a>
             <a href="{% url 'accounts:logout_user' %}" class="hover:text-black">Logout</a>
@@ -35,6 +35,7 @@
 
 <div class="grid grid-cols-3 gap-6 mb-10">
 
+    
 
  {%for meal in listings%}
 <div class="bg-white shadow">

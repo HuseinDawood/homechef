@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import MealForm, EditMealForm
 from .models import Meal
+from accounts.models import User_Preference
 
 @login_required
 def delete_meal(request, meal_id):
@@ -65,3 +66,49 @@ def food_view(request, meal_id):
     return render(request, 'food/food_view.html', {
         'meal': meal,
     })
+
+def calculate_match(requested_user, meal_id):
+    meal = get_object_or_404(Meal, id=meal_id)
+    preference = get_object_or_404(User_Preference, user=requested_user.user)
+    score = 0
+    overall = 0 
+    #if the cuisine matches
+    if meal.meal_cuisine_type in preference.preferred_cuisines.all():
+        score += 2
+        overall += 2
+
+    #if cuisine dont match
+    if meal.meal_cuisine_type in preference.disliked_cuisines.all():
+        score -= 2
+        overall += 2   
+
+
+    for ingredients in meal.meal_ingredients.all():
+        overall +=1
+
+        if ingredients in preference.preferred_ingredients.all():
+            score +=1
+
+        if ingredients in preference.disliked_ingredients.all():
+            score -=1
+
+        if ingredients in preference.allergies.all():
+            return 0
+        
+    #treat these at instant red flags
+    if preference.is_vegan and not meal.meal_is_vegan:
+        return 0
+    if preference.is_halal and not meal.meal_is_halal:
+        return 0
+    if preference.is_vegetarian and not meal.meal_is_vegetarian:
+        return 0
+    if preference.is_gluten_free and not meal.meal_is_gluten_free:
+        return 0
+    if preference.is_nut_free and not meal.meal_is_nut_free:
+        return 0
+    
+    if overall > 0:
+        return int((score/overall) * 100)
+    else:
+        return 0
+

@@ -171,9 +171,9 @@ body {
         </div>
 
         <nav class="space-x-6 text-gray-600">
-            <a href="#" class="hover:text-black">Discover</a>
+            <a href="{%url 'food:browse_food' %}" class="hover:text-black">Discover</a>
             <a href="{%url 'accounts:dashboard' %}" class="hover:text-black">Account</a>
-            <a href="#" class="hover:text-black">Sell dish</a>
+            <a href="{%url 'food:add_meal' %}" class="hover:text-black">Sell dish</a>
             <a href="#" class="hover:text-black">Inbox</a>
             <a href="{% url 'accounts:logout_user' %}" class="hover:text-black">Logout</a>
         </nav>
