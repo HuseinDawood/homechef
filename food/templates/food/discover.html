@@ -37,7 +37,7 @@
 
     
 
- {%for meal in listings%}
+{% for meal, meal_score in meal_scores %}
 <div class="bg-white shadow">
 
 <img src="{{ meal.meal_image.url }}"
@@ -45,6 +45,7 @@ class="h-40 w-full object-cover">
 
 <div class="p-4 flex justify-between items-center">
 <p class="font-semibold text-gray-700">{{meal.meal_name}}</p>
+<p class="font-semibold text-gray-700">{{meal_score}}% chance you'll like it</p>
 </div>
 <div class="p-4 pt-0">
 {% if meal.id %}

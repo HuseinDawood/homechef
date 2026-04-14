@@ -57,8 +57,16 @@ def edit_meal(request, pk):
 
 def browse_food(request):
     listings= Meal.objects.all()
+    meal_scores = []
+    for meal in listings:
+        meal_score = calculate_match(request, meal.id)
+        meal_scores.append((meal,meal_score))
+
+    meal_scores.sort(key=lambda x: x[1], reverse=True)
+    print(meal_scores)
+
     return render (request, 'food/discover.html', {
-        'listings': listings,
+        'meal_scores': meal_scores,
     })
 
 def food_view(request, meal_id):
@@ -108,7 +116,12 @@ def calculate_match(requested_user, meal_id):
         return 0
     
     if overall > 0:
-        return int((score/overall) * 100)
+        print (score,overall)
+        final_score= int((score/overall) * 100)
+        if final_score > 0:
+            return final_score
+        else:
+            return 0
     else:
         return 0
 
