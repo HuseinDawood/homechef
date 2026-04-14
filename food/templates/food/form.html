@@ -60,7 +60,7 @@
 
 <div class="mb-4">
     <label class="inline-block mb-2">Ingredients</label>
-    <select id="ingredient-select" class="w-full py-3 px-4 border rounded-xl">
+    <select id="ingredient_select" class="w-full py-3 px-4 border rounded-xl">
         <option value="">Select ingredient</option>
         {% for ingredient in form.meal_ingredients.field.queryset %}
             <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
@@ -70,7 +70,7 @@
     <div class="hidden">
         {{ form.meal_ingredients }}
     </div>
-    <div id="selected-ingredients" class="flex flex-wrap gap-2 mt-3"></div>
+    <div id="selected_ingredients" class="flex flex-wrap gap-2 mt-3"></div>
     </div>
 
 
@@ -130,8 +130,8 @@
 </html>
 
 <script>
-const select = document.getElementById("ingredient-select");
-const selectedContainer = document.getElementById("selected-ingredients");
+const select = document.getElementById("ingredient_select");
+const selectedContainer = document.getElementById("selected_ingredients");
 const hiddenSelect = document.querySelector("select[name='meal_ingredients']");
 
 select.addEventListener("change", function() {
@@ -175,4 +175,28 @@ select.addEventListener("change", function() {
 
     this.value = "";
 });
+function preloadSelected(hiddenName, containerId) {
+    const hiddenSelect = document.getElementById(`id_${hiddenName}`);
+    const container = document.getElementById(containerId);
+
+    for (let option of hiddenSelect.options) {
+        if (option.selected) {
+            const tag = document.createElement("span");
+            tag.className = "bg-green-200 px-3 py-1 rounded-full flex items-center gap-2";
+
+            tag.innerHTML = `
+                ${option.text}
+                <button type="button">&times;</button>
+            `;
+
+            tag.querySelector("button").onclick = () => {
+                option.selected = false;
+                tag.remove();
+            };
+
+            container.appendChild(tag);
+        }
+    }
+}
+preloadSelected("meal_ingredients", "selected_ingredients");
 </script>
